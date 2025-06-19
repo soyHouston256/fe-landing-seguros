@@ -1,0 +1,136 @@
+<div class="bg-white rounded-2xl shadow-xl p-8 w-full h-[550px]">
+    <form id="leadForm" class="space-y-4 max-w-md mx-auto">
+        <!-- Mensajes de estado -->
+        <div id="formMessage" class="hidden p-4 rounded-lg text-sm font-medium">
+        </div>
+
+        <div>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Nombres"
+                required
+                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue focus:border-transparent"
+            />
+        </div>
+
+        <div>
+            <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Apellidos"
+                required
+                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue focus:border-transparent"
+            />
+        </div>
+
+        <div class="flex space-x-2">
+            <div class="relative inline-block w-32">
+                <select
+                    id="documentType"
+                    name="documentType"
+                    required
+                    class="appearance-none px-3 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue w-full"
+                >
+                    <option value="DNI">DNI</option>
+                    <option value="CE">CE</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                </select>
+                <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500"
+                >
+                    <!-- Puedes usar un ícono SVG o un carácter unicode como ▼ -->
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                        <path d="M5.25 7.25L10 12.25L14.75 7.25H5.25Z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <input
+                type="text"
+                id="documentNumber"
+                name="documentNumber"
+                placeholder="Número de documento"
+                required
+                pattern="[0-9]{8,12}"
+                class="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue focus:border-transparent"
+            />
+        </div>
+
+        <div>
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Celular"
+                required
+                pattern="[0-9]{9,12}"
+                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue focus:border-transparent"
+            />
+        </div>
+
+        <div>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Correo electrónico"
+                required
+                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pacifico-blue focus:border-transparent"
+            />
+        </div>
+
+        <div class="flex items-start space-x-2">
+            <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                required
+                class="mt-1 w-4 h-4 text-pacifico-blue border-gray-300 rounded focus:ring-pacifico-blue"
+            />
+            <label for="terms" class="text-xs text-gray-500 leading-relaxed">
+                Al continuar, acepto los <a
+                    href="#"
+                    class="text-pacifico-blue underline"
+                    >Términos y Condiciones</a
+                >
+                <a href="#" class="text-pacifico-blue underline"
+                    >revisalos aquí</a
+                >. En breve, un asesor te contactará para ayudarte a encontrar
+                la mejor protección para tu salud.
+            </label>
+        </div>
+
+        <button
+            type="submit"
+            id="submitBtn"
+            class="w-full bg-pacifico-pink text-white py-3 rounded-lg hover:bg-pink-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span class="btn-text">Solicítalo aquí</span>
+            <span class="btn-loading hidden">
+                <svg
+                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        class="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                </svg>
+                Enviando...
+            </span>
+        </button>
+    </form>
+</div>

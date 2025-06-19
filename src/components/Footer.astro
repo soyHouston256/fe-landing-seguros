@@ -2,46 +2,111 @@
 // Footer.astro - Footer del sitio
 ---
 
-<footer class="bg-pacifico-dark-blue text-white py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <!-- Logo y descripción -->
-      <div class="col-span-1 md:col-span-2">
-        <div class="flex items-center mb-4">
-          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <span class="text-pacifico-blue font-bold text-lg">P</span>
-          </div>
-          <span class="ml-3 text-2xl font-bold">pacífico</span>
+<footer class="bg-pacifico-blue text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Logo y descripción -->
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center mb-4">
+                    <div
+                        class="w-10 h-10 bg-white rounded-full flex items-center justify-center"
+                    >
+                        <span class="text-pacifico-blue font-bold text-lg"
+                            >P</span
+                        >
+                    </div>
+                    <span class="ml-3 text-2xl font-bold text-white/70"
+                        ><strong class="text-white">Fe</strong>Seguros</span
+                    >
+                </div>
+                <p class="text-blue-200 max-w-md">
+                    Protegemos tu salud y la de tu familia con los mejores
+                    planes de seguro médico. Tu tranquilidad es nuestra
+                    prioridad.
+                </p>
+            </div>
+
+            <!-- Enlaces rápidos -->
+            <div>
+                <h3 class="font-semibold mb-4">Enlaces rápidos</h3>
+                <ul class="space-y-2 text-blue-200">
+                    <li>
+                        <a href="#" class="hover:text-white transition-colors"
+                            >Beneficios</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white transition-colors"
+                            >Descuentos</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white transition-colors"
+                            >Preguntas frecuentes</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white transition-colors"
+                            >Contacto</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contacto -->
+            <div>
+                <h3 class="font-semibold mb-4">Contacto</h3>
+                <ul class="space-y-2 text-blue-200">
+                    <li class="flex items-center gap-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M19.95 21q-3.125 0-6.175-1.362t-5.55-3.863t-3.862-5.55T3 4.05q0-.45.3-.75t.75-.3H8.1q.35 0 .625.238t.325.562l.65 3.5q.05.4-.025.675T9.4 8.45L6.975 10.9q.5.925 1.187 1.787t1.513 1.663q.775.775 1.625 1.438T13.1 17l2.35-2.35q.225-.225.588-.337t.712-.063l3.45.7q.35.1.575.363T21 15.9v4.05q0 .45-.3.75t-.75.3"
+                            ></path></svg
+                        >
+                        (01) 411-1111
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7L4 8v10h16V8zm0-2l8-5H4zM4 8V6v12z"
+                            ></path></svg
+                        >
+                        info@feseguros.com.pe
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M12 12q.825 0 1.413-.587T14 10t-.587-1.412T12 8t-1.412.588T10 10t.588 1.413T12 12m0 7.35q3.05-2.8 4.525-5.087T18 10.2q0-2.725-1.737-4.462T12 4T7.738 5.738T6 10.2q0 1.775 1.475 4.063T12 19.35M12 22q-4.025-3.425-6.012-6.362T4 10.2q0-3.75 2.413-5.975T12 2t5.588 2.225T20 10.2q0 2.5-1.987 5.438T12 22m0-12"
+                            ></path></svg
+                        >
+                        Lima, Perú
+                    </li>
+                </ul>
+            </div>
         </div>
-        <p class="text-blue-200 max-w-md">
-          Protegemos tu salud y la de tu familia con los mejores planes de seguro médico. Tu tranquilidad es nuestra prioridad.
-        </p>
-      </div>
-      
-      <!-- Enlaces rápidos -->
-      <div>
-        <h3 class="font-semibold mb-4">Enlaces rápidos</h3>
-        <ul class="space-y-2 text-blue-200">
-          <li><a href="#" class="hover:text-white transition-colors">Beneficios</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Descuentos</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Preguntas frecuentes</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Contacto</a></li>
-        </ul>
-      </div>
-      
-      <!-- Contacto -->
-      <div>
-        <h3 class="font-semibold mb-4">Contacto</h3>
-        <ul class="space-y-2 text-blue-200">
-          <li>📞 (01) 411-1111</li>
-          <li>📧 info@pacifico.com.pe</li>
-          <li>🏢 Lima, Perú</li>
-        </ul>
-      </div>
+
+        <div
+            class="border-t border-blue-400 mt-8 pt-8 text-center text-blue-200"
+        >
+            <p>&copy; 2025 Fe Seguros. Todos los derechos reservados.</p>
+        </div>
     </div>
-    
-    <div class="border-t border-blue-600 mt-8 pt-8 text-center text-blue-200">
-      <p>&copy; 2024 Pacífico Seguros. Todos los derechos reservados.</p>
-    </div>
-  </div>
 </footer>
