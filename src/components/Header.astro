@@ -1,0 +1,35 @@
+---
+// Header.astro - Componente modular del header
+---
+
+<header class="bg-white shadow-sm">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-pacifico-blue rounded-full flex items-center justify-center">
+          <span class="text-white font-bold text-lg">P</span>
+        </div>
+        <span class="ml-3 text-2xl font-bold text-pacifico-blue">pacífico</span>
+      </div>
+      
+      <!-- Navegación -->
+      <div class="hidden md:flex space-x-8">
+        <a href="#beneficios" class="text-pacifico-blue hover:text-pacifico-dark-blue transition-colors">
+          ¿Cuáles son los beneficios?
+        </a>
+        <a href="#descuentos" class="text-pacifico-blue hover:text-pacifico-dark-blue transition-colors">
+          Descubre los descuentos
+        </a>
+        <a href="#preguntas" class="text-pacifico-blue hover:text-pacifico-dark-blue transition-colors">
+          Preguntas Frecuentes
+        </a>
+      </div>
+      
+      <!-- Botón CTA -->
+      <button class="bg-pacifico-pink text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors font-medium">
+        Solicitar asesoría
+      </button>
+    </div>
+  </nav>
+</header>

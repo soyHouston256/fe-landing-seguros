@@ -1,0 +1,254 @@
+---
+// admin.astro - Página para ver los leads guardados
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Admin - Leads Guardados">
+  <div class="min-h-screen bg-gray-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-lg shadow">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h1 class="text-2xl font-bold text-gray-900">Leads Guardados</h1>
+          <p class="text-gray-600">Lista de personas interesadas en seguros de salud</p>
+        </div>
+        
+        <div class="p-6">
+          <!-- Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <div class="text-blue-600 text-sm font-medium">Total Leads</div>
+              <div id="totalLeads" class="text-2xl font-bold text-blue-900">-</div>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg">
+              <div class="text-green-600 text-sm font-medium">Hoy</div>
+              <div id="todayLeads" class="text-2xl font-bold text-green-900">-</div>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg">
+              <div class="text-purple-600 text-sm font-medium">Esta Semana</div>
+              <div id="weekLeads" class="text-2xl font-bold text-purple-900">-</div>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="flex space-x-4 mb-6">
+            <button 
+              id="refreshBtn"
+              class="bg-pacifico-blue text-white px-4 py-2 rounded-lg hover:bg-pacifico-dark-blue transition-colors"
+            >
+              🔄 Actualizar
+            </button>
+            <button 
+              id="exportBtn"
+              class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            >
+              📊 Exportar CSV
+            </button>
+            <a 
+              href="/"
+              class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              🏠 Volver al sitio
+            </a>
+          </div>
+
+          <!-- Loading state -->
+          <div id="loading" class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pacifico-blue mx-auto"></div>
+            <p class="text-gray-600 mt-2">Cargando leads...</p>
+          </div>
+
+          <!-- Error state -->
+          <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <p id="errorMessage">Error cargando los datos</p>
+          </div>
+
+          <!-- Empty state -->
+          <div id="empty" class="hidden text-center py-12">
+            <div class="text-gray-400 text-6xl mb-4">📋</div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No hay leads aún</h3>
+            <p class="text-gray-600">Los leads aparecerán aquí cuando alguien llene el formulario</p>
+          </div>
+
+          <!-- Tabla de leads -->
+          <div id="leadsTable" class="hidden overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nombre Completo
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Documento
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Teléfono
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Fecha
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody" class="bg-white divide-y divide-gray-200">
+                <!-- Los leads se insertarán aquí dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loading = document.getElementById('loading')!;
+  const error = document.getElementById('error')!;
+  const empty = document.getElementById('empty')!;
+  const leadsTable = document.getElementById('leadsTable')!;
+  const leadsTableBody = document.getElementById('leadsTableBody')!;
+  const errorMessage = document.getElementById('errorMessage')!;
+  
+  const totalLeadsEl = document.getElementById('totalLeads')!;
+  const todayLeadsEl = document.getElementById('todayLeads')!;
+  const weekLeadsEl = document.getElementById('weekLeads')!;
+  
+  const refreshBtn = document.getElementById('refreshBtn')!;
+  const exportBtn = document.getElementById('exportBtn')!;
+
+  // Función para cargar leads
+  async function loadLeads() {
+    try {
+      // Mostrar loading
+      loading.classList.remove('hidden');
+      error.classList.add('hidden');
+      empty.classList.add('hidden');
+      leadsTable.classList.add('hidden');
+
+      const response = await fetch('/api/lead');
+      
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Error desconocido');
+      }
+
+      const leads = data.leads || [];
+      
+      // Ocultar loading
+      loading.classList.add('hidden');
+
+      if (leads.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      // Calcular estadísticas
+      const today = new Date().toDateString();
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      
+      const todayCount = leads.filter(lead => 
+        lead.createdAt && new Date(lead.createdAt).toDateString() === today
+      ).length;
+      
+      const weekCount = leads.filter(lead => 
+        lead.createdAt && new Date(lead.createdAt) >= weekAgo
+      ).length;
+
+      // Actualizar stats
+      totalLeadsEl.textContent = leads.length.toString();
+      todayLeadsEl.textContent = todayCount.toString();
+      weekLeadsEl.textContent = weekCount.toString();
+
+      // Llenar tabla
+      leadsTableBody.innerHTML = '';
+      leads.forEach(lead => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">${lead.name} ${lead.lastname}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${lead.documentType}: ${lead.documentNumber}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${lead.phone}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${lead.email}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-500">
+              ${lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('es-PE') : 'N/A'}
+            </div>
+          </td>
+        `;
+        leadsTableBody.appendChild(row);
+      });
+
+      leadsTable.classList.remove('hidden');
+
+    } catch (err) {
+      loading.classList.add('hidden');
+      error.classList.remove('hidden');
+      errorMessage.textContent = err instanceof Error ? err.message : 'Error desconocido';
+      console.error('Error cargando leads:', err);
+    }
+  }
+
+  // Función para exportar CSV
+  function exportCSV() {
+    fetch('/api/lead')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success || !data.leads.length) {
+          alert('No hay datos para exportar');
+          return;
+        }
+
+        const leads = data.leads;
+        const headers = ['Nombre', 'Apellido', 'Tipo Doc', 'Número Doc', 'Teléfono', 'Email', 'Fecha'];
+        const csvContent = [
+          headers.join(','),
+          ...leads.map(lead => [
+            lead.name,
+            lead.lastname,
+            lead.documentType,
+            lead.documentNumber,
+            lead.phone,
+            lead.email,
+            lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('es-PE') : ''
+          ].join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `leads-pacifico-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(err => {
+        console.error('Error exportando CSV:', err);
+        alert('Error al exportar datos');
+      });
+  }
+
+  // Event listeners
+  refreshBtn.addEventListener('click', loadLeads);
+  exportBtn.addEventListener('click', exportCSV);
+
+  // Cargar leads al inicio
+  loadLeads();
+
+  // Auto-refresh cada 30 segundos
+  setInterval(loadLeads, 30000);
+});
+</script>
