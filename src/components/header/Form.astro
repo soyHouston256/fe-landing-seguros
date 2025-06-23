@@ -1,5 +1,5 @@
 <div class="bg-white rounded-2xl shadow-xl p-8 w-full h-[550px]">
-    <form id="leadForm" class="space-y-4 max-w-md mx-auto">
+    <form id="leadForm" class="space-y-2.5 max-w-md mx-auto">
         <!-- Mensajes de estado -->
         <div id="formMessage" class="hidden p-4 rounded-lg text-sm font-medium">
         </div>
@@ -102,35 +102,32 @@
                 la mejor protección para tu salud.
             </label>
         </div>
-
+        
         <button
             type="submit"
             id="submitBtn"
-            class="w-full bg-pacifico-pink text-white py-3 rounded-lg hover:bg-pink-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full bg-pacifico-pink text-white px-6 py-4 rounded-lg hover:bg-pink-700 transition-colors font-semibold text-lg flex items-center justify-center disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-            <span class="btn-text">Solicítalo aquí</span>
-            <span class="btn-loading hidden">
-                <svg
-                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <circle
-                        class="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        stroke-width="4"></circle>
-                    <path
-                        class="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                </svg>
-                Enviando...
-            </span>
+            <span class="btn-text">Solicitar asesoría gratuita</span>
+            <svg
+                class="btn-loading hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"></circle>
+                <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+            </svg>
         </button>
     </form>
 </div>

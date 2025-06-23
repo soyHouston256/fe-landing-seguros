@@ -103,6 +103,17 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
+// Define Lead interface
+interface Lead {
+  name: string;
+  lastname: string;
+  documentType: string;
+  documentNumber: string;
+  phone: string;
+  email: string;
+  createdAt?: string;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const loading = document.getElementById('loading')!;
   const error = document.getElementById('error')!;
@@ -127,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
       empty.classList.add('hidden');
       leadsTable.classList.add('hidden');
 
-      const response = await fetch('/api/lead');
+      const response = await fetch('http://localhost:3000/api/lead');
       
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -139,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error(data.error || 'Error desconocido');
       }
 
-      const leads = data.leads || [];
+      const leads = data.data || [];
       
       // Ocultar loading
       loading.classList.add('hidden');
@@ -152,12 +163,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Calcular estadísticas
       const today = new Date().toDateString();
       const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      
-      const todayCount = leads.filter(lead => 
+
+      const todayCount = leads.filter((lead: Lead) =>
         lead.createdAt && new Date(lead.createdAt).toDateString() === today
       ).length;
-      
-      const weekCount = leads.filter(lead => 
+
+      const weekCount = leads.filter((lead: Lead) =>
         lead.createdAt && new Date(lead.createdAt) >= weekAgo
       ).length;
 
@@ -168,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Llenar tabla
       leadsTableBody.innerHTML = '';
-      leads.forEach(lead => {
+      leads.forEach((lead: Lead) => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td class="px-6 py-4 whitespace-nowrap">
@@ -216,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const headers = ['Nombre', 'Apellido', 'Tipo Doc', 'Número Doc', 'Teléfono', 'Email', 'Fecha'];
         const csvContent = [
           headers.join(','),
-          ...leads.map(lead => [
+          ...leads.map((lead: Lead) => [
             lead.name,
             lead.lastname,
             lead.documentType,
